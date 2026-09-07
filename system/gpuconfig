@@ -1,0 +1,6 @@
+#!/bin/sh
+# Kakip Mali (libmali, GLES-only) × GNOME mutter shim.
+# Same trick as NXP flexbuild's gpuconfig for i.MX95: mutter links desktop
+# libGL.so.1, but the Mali blob only provides GLES — rewrite the DT_NEEDED
+# so mutter renders through GLES2. Runs once per boot before GDM.
+patchelf --replace-needed libGL.so.1 libGLESv2.so.2 /lib/aarch64-linux-gnu/libmutter-*.so.0.0.0 2>/dev/null || true

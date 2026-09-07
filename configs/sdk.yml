@@ -1,0 +1,19 @@
+# Kakip Ubuntu 26.04 GNOME BSP — identity
+# Sources: Renesas AI SDK v6.00 (RTK0EF0180F06000SJ), all local under ../yocto/
+# Layout modeled on ~/dev-nvme/nxp/std/debian-13/flexbuild
+
+DISTRIB_NAME:    "Kakip Ubuntu GNOME BSP (AI SDK v6.00 base)"
+DISTRIB_VERSION: "kakip-bsp-2026.07"
+
+UBUNTU_CODENAME: "resolute"
+UBUNTU_VERSION:  "26.04"
+
+# from AI SDK recipe linux-renesas_6.1.bb (exact pin, source tarball local)
+KERNEL_VERSION:  "6.1.141-cip43"
+KERNEL_BRANCH:   "rz-6.1-cip43"
+KERNEL_SRCREV:   "10b3443b44fe6cc8bd79f1705a1fc403f8debaca"
+
+MACHINE: rzv2h-evk
+SOC: r9a09g057
+
+DESKTOP: gnome-mutter-wayland   # Mali blob is wayland/fbdev only — no X11 session

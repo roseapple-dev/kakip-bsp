@@ -1,0 +1,10 @@
+# Kakip accelerator device permissions for a multi-user GNOME system.
+# (The AI SDK Yocto image runs everything as root, so it ships no rules;
+# these grant the desktop user access via the video/render groups.)
+KERNEL=="drpai*",  GROUP="video",  MODE="0660"
+KERNEL=="drp*",    GROUP="video",  MODE="0660"
+KERNEL=="uvcs*",   GROUP="video",  MODE="0660"
+KERNEL=="rgnmm*",  GROUP="video",  MODE="0660"
+KERNEL=="rgnmmbuf*", GROUP="video", MODE="0660"
+KERNEL=="vspm*",   GROUP="video",  MODE="0660"
+KERNEL=="mali*",   MODE="0666"

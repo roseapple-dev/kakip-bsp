@@ -1,0 +1,17 @@
+f7398d616a6b312c33da3858af13dd85a4124d0c3d60ee6040333f1c323682f8  ./bootloader/bl2_bp_spi-rzv2h-evk.srec
+4ba79f3c16f0cba78721eb3837b15707ea68efa46548650d93c4075b8e300fa6  ./bootloader/fip-rzv2h-evk.srec
+c22603a4c90a1f8999c9c76f26f75bd613f312ec55dff9e9c6355135fbef3ff8  ./bootloader/Flash_Writer_SCIF_RZV2H_DEV_INTERNAL_MEMORY.mot
+4e1ece9dc49b0d3ccb9feb0a0930a0de5968638a824d6f0e46fd9359aad1c7e9  ./bootloader/kakip/bl2-kakip.bin
+eef73b4348076555139a68071f2be968fa129e5cdd5133a27206c96ee7938794  ./bootloader/kakip/bl2-kakip-tfa27.bin
+a82888809c1f693fc336d9d6475467462acc7a308fd95842897b047d3094ad0a  ./bootloader/kakip/bp-kakip.bin
+9357f527cf848671fa2e01344a13d41e39e05f3d26976c1aed956858218520b2  ./bootloader/kakip/bp-kakip-tfa27.bin
+4fd5399115228989dd384d0bef42d410c3e5502fe39f5216a735b8d5c134a263  ./bootloader/kakip/fip-kakip.bin
+d41666d6b39c1702ef5b87f3d828942dda4949e476dcadc2b306befea9c317e2  ./bootloader/kakip/fip-kakip-tfa27.bin
+3c63b667fd46973a65508a83e7478faf06b4a9be68011afa5c74cfcc5c3439d5  ./Codec_Bin.bin
+7dd386d9c5b0648317ca8d897a4fe8314dd1250a1a955ce7c7455a826ae4eb01  ./codec_pkg_product_v4.3.3.0.tar.gz
+3465f93351331356952daa283a35a86bd080ff47657e7a29a7dbdcebaaad0e63  ./libdrp_api.so
+844b79a8e2d73ff8d0a3a166be33cdef97c3a02820d49329bd6a7b9ac748fba6  ./lib_tvm.tar.gz
+30d9625e33ab4a52ab9c995bf0e218d65cc909c320bf85c0e60f3572962fb389  ./mali-g31_km_v1.3.0.tar.gz
+3abfc7c3a5a1dd0d747897fd5741cae809b03366ce723aa6c04351233002ae2e  ./mali-g31_um_v1.3.0.tar.gz
+088672187eacb2082ee97c368fad8b3d1d8e88b206e16e8275056ca3796a1825  ./OpenCV_Bin.bin
+942c0fe7f16b9f578c2921e1ac290a9883c2c241589e7e84b75de9388c71c440  ./uvcs_kernel_package_v4.3.3.0.tar.bz2

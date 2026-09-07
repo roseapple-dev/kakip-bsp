@@ -1,0 +1,10 @@
+[Unit]
+Description=Mali GLES shim for GNOME mutter (Kakip)
+Before=gdm.service gdm3.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/gpuconfig
+
+[Install]
+WantedBy=graphical.target

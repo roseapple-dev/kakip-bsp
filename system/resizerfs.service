@@ -1,0 +1,9 @@
+[Unit]
+Description=Expand rootfs to full SD card on first boot
+After=local-fs.target
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/resizerfs
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target
