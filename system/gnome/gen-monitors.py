@@ -23,7 +23,7 @@ GREETER_PATH = Path("/var/lib/gdm3/seat0/config/monitors.xml")
 SKEL_PATH = Path("/etc/skel/.config/monitors.xml")
 HOMES_DIR = Path("/home")
 
-CONNECTOR_PRIORITY = ["HDMI", "DP", "eDP", "LVDS", "DSI", "VGA"]
+CONNECTOR_PRIORITY = ["HDMI", "DP", "eDP", "LVDS", "DSI", "VGA", "Virtual"]
 
 # Mutter renames kernel DRM connector type names (the prefix before the
 # numeric id) for its monitorspec.connector value. The kernel exposes
@@ -196,7 +196,18 @@ def build_xml(displays):
 
 def write_atomic(path, content, mode=0o644, uid_gid=None):
     """Write file then set perms/owner. Skips owner change if uid_gid is None."""
+    made = []
+    p = path.parent
+    while not p.exists():
+        made.append(p)
+        p = p.parent
     path.parent.mkdir(parents=True, exist_ok=True)
+    if uid_gid is not None:
+        for d in made:
+            try:
+                os.chown(d, *uid_gid)
+            except OSError:
+                pass
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(content)
     os.chmod(tmp, mode)
