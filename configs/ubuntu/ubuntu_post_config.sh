@@ -100,6 +100,10 @@ else
   printf "[daemon]\nWaylandEnable=true\n" > "$ROOTDIR/etc/gdm3/custom.conf"
 fi
 
+if ! grep -q '^AutomaticLoginEnable' "$ROOTDIR/etc/gdm3/custom.conf"; then
+  sed -i '/^\[daemon\]/a AutomaticLoginEnable=true\nAutomaticLogin=ubuntu' "$ROOTDIR/etc/gdm3/custom.conf"
+fi
+
 # --- clock / apt (RZ/V2H RTC probe fails with -ETIMEDOUT, so the boot clock is
 # wrong until NTP syncs; without this apt rejects the mirror Release as "not
 # valid yet"). Skip apt's date check; chrony/clock-epoch (below) fix the clock. ---
