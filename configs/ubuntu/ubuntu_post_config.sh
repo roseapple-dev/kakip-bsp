@@ -113,6 +113,75 @@ Acquire::Check-Date "false";
 Acquire::Check-Valid-Until "false";
 ACONF
 
+chroot "$ROOTDIR" /bin/bash -e <<'RDEOF'
+mkdir -p /etc/systemd/system/sysinit.target.wants
+ln -sf /lib/systemd/system/vkms.service /etc/systemd/system/sysinit.target.wants/vkms.service
+
+if [ -f /usr/lib/udev/rules.d/61-mutter.rules ]; then
+  grep -v vkms /usr/lib/udev/rules.d/61-mutter.rules > /etc/udev/rules.d/61-mutter.rules
+fi
+
+# Never suspend an always-on board: mask every path into system sleep.
+systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+# GNOME power/idle + remote-desktop defaults via dconf, for user sessions and
+# the GDM greeter. The greeter needs its own profile carrying system-db:gdm --
+# Ubuntu 26.04's stock /usr/share/dconf/profile/gdm omits it, so a gdm.d db on
+# its own is a no-op.
+mkdir -p /etc/dconf/db/local.d /etc/dconf/db/gdm.d /etc/dconf/profile
+printf 'user-db:user\nsystem-db:local\n' > /etc/dconf/profile/user
+printf 'user-db:user\nsystem-db:gdm\nfile-db:/var/lib/gdm3/greeter-dconf-defaults\n' > /etc/dconf/profile/gdm
+cat > /etc/dconf/db/local.d/00-kakip-desktop <<'CONF'
+[org/gnome/settings-daemon/plugins/power]
+sleep-inactive-ac-type='nothing'
+sleep-inactive-battery-type='nothing'
+
+[org/gnome/desktop/session]
+idle-delay=uint32 0
+
+[org/gnome/desktop/remote-desktop/rdp]
+enable=true
+view-only=false
+tls-cert='/home/ubuntu/.local/share/gnome-remote-desktop/tls.crt'
+tls-key='/home/ubuntu/.local/share/gnome-remote-desktop/tls.key'
+CONF
+cp /etc/dconf/db/local.d/00-kakip-desktop /etc/dconf/db/gdm.d/00-kakip-desktop
+dconf update || true
+
+# Enable the user-mode RDP server for every session.
+mkdir -p /etc/systemd/user/gnome-session.target.wants
+ln -sf /usr/lib/systemd/user/gnome-remote-desktop.service \
+       /etc/systemd/user/gnome-session.target.wants/gnome-remote-desktop.service
+
+SKEL_GRD=/etc/skel/.local/share/gnome-remote-desktop
+SKEL_KR=/etc/skel/.local/share/keyrings
+mkdir -p "$SKEL_GRD" "$SKEL_KR"
+openssl req -x509 -newkey rsa:2048 -nodes -days 3650 -subj /CN=kakip \
+  -keyout "$SKEL_GRD/tls.key" -out "$SKEL_GRD/tls.crt" >/dev/null 2>&1
+chmod 600 "$SKEL_GRD/tls.key"
+cat > "$SKEL_KR/login.keyring" <<'KEYRING'
+[keyring]
+display-name=Login
+ctime=0
+mtime=0
+lock-on-idle=false
+lock-after=false
+
+[1]
+item-type=0
+display-name=GNOME Remote Desktop RDP credentials
+secret={'username': <'ubuntu'>, 'password': <'ubuntu'>}
+mtime=0
+ctime=0
+
+[1:attribute0]
+name=xdg:schema
+type=string
+value=org.gnome.RemoteDesktop.RdpCredentials
+KEYRING
+chmod 600 "$SKEL_KR/login.keyring"
+RDEOF
+
 chroot "$ROOTDIR" /bin/bash -e <<'EOF'
 ldconfig
 id -u ubuntu &>/dev/null || useradd -m -d /home/ubuntu -s /bin/bash ubuntu
