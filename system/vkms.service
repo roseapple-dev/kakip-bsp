@@ -1,0 +1,14 @@
+# Load vkms only AFTER the real DRM devices have coldplugged.
+[Unit]
+Description=Load vkms after real DRM devices (UDL must win /dev/dri/card0)
+DefaultDependencies=no
+After=systemd-udev-trigger.service systemd-modules-load.service
+Before=gdm.service gdm3.service display-manager.service
+ConditionPathExists=!/sys/module/vkms
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'udevadm settle -t 15; modprobe vkms'
+
+[Install]
+WantedBy=sysinit.target
