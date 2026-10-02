@@ -189,6 +189,10 @@ echo "ubuntu:ubuntu" | chpasswd
 usermod -aG sudo,video,render,dialout ubuntu || true
 usermod -aG render,video gdm 2>/dev/null || true  # greeter needs /dev/mali0 + KMS
 usermod -aG render,video gdm 2>/dev/null || true
+# systemd 258+ emits OSC 3008 shell-integration issue fix
+dpkg-divert --local --rename --add /etc/profile.d/80-systemd-osc-context.sh
+dpkg-divert --local --rename --add /usr/lib/tmpfiles.d/20-systemd-osc-context.conf
+rm -f /etc/profile.d/80-systemd-osc-context.sh
 ln -sf /lib/systemd/system/gpuconfig.service /etc/systemd/system/graphical.target.wants/gpuconfig.service
 ln -sf /lib/systemd/system/resizerfs.service /etc/systemd/system/multi-user.target.wants/resizerfs.service
 ln -sf /lib/systemd/system/gen-monitors.service /etc/systemd/system/graphical.target.wants/gen-monitors.service
