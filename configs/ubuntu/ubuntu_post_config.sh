@@ -69,9 +69,21 @@ for so in "$LIBDIR"/libomxr_*.so.*.*.* "$LIBDIR"/libuvcs_*.so.*.*.*; do
   ln -sf "$stem.so.$major" "$(dirname "$so")/$stem.so"
 done
 
-# DRP / DRP-AI / OpenCVA removed for now (kernel DRP stack not enabled).
-# To restore: re-add the libdrp_api.so / Codec_Bin.bin / OpenCV_Bin.bin /
-# lib_tvm / drpai.h installs — the blobs are still cached in dl/.
+# --- DRP-AI userspace ---
+# DRP-AI TVM runtime from AI SDK v6.00 lib_tvm.tar.gz = rzv_drp-ai_tvm v2.5.1
+tar -xf "$DLDIR/lib_tvm.tar.gz" -C "$WORK"
+install -D -m 755 "$WORK/lib_binaries/libtvm_runtime.so.2.5.1" "$LIBDIR/libtvm_runtime.so.2.5.1"
+ln -sf libtvm_runtime.so.2.5.1 "$LIBDIR/libtvm_runtime.so"
+install -D -m 644 "$WORK/lib_binaries/licenses/LICENSE" "$ROOTDIR/usr/share/doc/libtvm-runtime/LICENSE"
+# libdrp_api.so: dlopen'ed by libomxr_mc_h265d (only a load-failed warning without it)
+install -D -m 755 "$DLDIR/libdrp_api.so" "$LIBDIR/libdrp_api.so"
+DRPAI_H="$BSPDIR/src/linux/include/uapi/linux/drpai.h"
+if [ -f "$DRPAI_H" ]; then
+  install -D -m 644 "$DRPAI_H" "$ROOTDIR/usr/include/linux/drpai.h"
+else
+  echo "[INFO] kernel tree has no DRP-AI driver, skipping drpai.h"
+fi
+install -D -m 644 "$BSPDIR/system/modules-load.d/kakip-accel.conf" "$ROOTDIR/etc/modules-load.d/kakip-accel.conf"
 
 # --- mmngr/vspm userspace libs are built by tools/build_gst_plugins.sh (in-chroot) ---
 
