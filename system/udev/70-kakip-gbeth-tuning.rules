@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="net", DRIVERS=="renesas-gbeth", ATTR{threaded}="1"

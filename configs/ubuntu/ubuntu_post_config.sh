@@ -93,6 +93,7 @@ install -D -m 644 "$BSPDIR/system/gpuconfig.service"  "$ROOTDIR/lib/systemd/syst
 install -D -m 755 "$BSPDIR/system/gnome/gen-monitors.py"      "$ROOTDIR/usr/local/bin/gen-monitors.py"
 install -D -m 644 "$BSPDIR/system/gnome/gen-monitors.service" "$ROOTDIR/lib/systemd/system/gen-monitors.service"
 install -D -m 644 "$BSPDIR/system/udev/99-rzv2h-accel.rules"  "$ROOTDIR/etc/udev/rules.d/99-rzv2h-accel.rules"
+install -D -m 644 "$BSPDIR/system/udev/70-kakip-gbeth-tuning.rules" "$ROOTDIR/etc/udev/rules.d/70-kakip-gbeth-tuning.rules"
 install -D -m 644 "$BSPDIR/system/vkms.service"              "$ROOTDIR/lib/systemd/system/vkms.service"
 install -D -m 755 "$BSPDIR/tools/resizerfs" "$ROOTDIR/usr/bin/resizerfs"
 install -D -m 644 "$BSPDIR/system/resizerfs.service" "$ROOTDIR/lib/systemd/system/resizerfs.service"
