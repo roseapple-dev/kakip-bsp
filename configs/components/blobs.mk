@@ -14,9 +14,12 @@ blob_lib_tvm.tar.gz_aisdk := $(AISDK_REC)/meta-rz-drpai/recipes-core/lib-tvm/lib
 blob_libdrp_api.so_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-drp/drp-lib/files/libdrp_api.so
 blob_Codec_Bin.bin_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-drp/drp-fw/files/Codec_Bin.bin
 blob_OpenCV_Bin.bin_aisdk := $(AISDK_REC)/meta-rz-opencva/recipes-oca/oca/files/OpenCV_Bin.bin
+blob_OMXR_VideoExt.h_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-multimedia/codec-module/files/OMXR_VideoExt.h
+blob_OMXR_IndexExt.h_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-multimedia/codec-module/files/OMXR_IndexExt.h
 
 BLOBS := mali-g31_um_v1.3.0.tar.gz mali-g31_km_v1.3.0.tar.gz \
          codec_pkg_product_v4.3.3.0.tar.gz uvcs_kernel_package_v4.3.3.0.tar.bz2 \
+         OMXR_VideoExt.h OMXR_IndexExt.h \
          lib_tvm.tar.gz libdrp_api.so Codec_Bin.bin OpenCV_Bin.bin
 
 define BLOB_template

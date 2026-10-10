@@ -61,6 +61,7 @@ find "$CODEC" -name "omxr_config_*.txt" -exec install -D -m 644 -t "$ROOTDIR/etc
 # OMX headers — needed later by tools/build_gst_plugins.sh (gst-omx target=rz)
 mkdir -p "$ROOTDIR/usr/include/omxr"
 find "$CODEC" -path "*/include/*" -name "*.h" -exec install -D -m 644 -t "$ROOTDIR/usr/include/omxr" {} \;
+install -m 644 "$DLDIR/OMXR_VideoExt.h" "$DLDIR/OMXR_IndexExt.h" "$ROOTDIR/usr/include/omxr/"
 # soname symlinks (libomxr_*.so.3.0.0 -> .so.3 -> .so, uvcs likewise)
 for so in "$LIBDIR"/libomxr_*.so.*.*.* "$LIBDIR"/libuvcs_*.so.*.*.*; do
   [ -e "$so" ] || continue
