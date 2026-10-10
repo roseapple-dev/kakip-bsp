@@ -78,6 +78,7 @@ ln -sf libtvm_runtime.so.2.5.1 "$LIBDIR/libtvm_runtime.so"
 install -D -m 644 "$WORK/lib_binaries/licenses/LICENSE" "$ROOTDIR/usr/share/doc/libtvm-runtime/LICENSE"
 # libdrp_api.so: dlopen'ed by libomxr_mc_h265d (only a load-failed warning without it)
 install -D -m 755 "$DLDIR/libdrp_api.so" "$LIBDIR/libdrp_api.so"
+ln -sf aarch64-linux-gnu/libdrp_api.so "$ROOTDIR/usr/lib/libdrp_api.so"
 install -D -m 644 "$DLDIR/drp_api.h" "$ROOTDIR/usr/include/drp_api.h"
 DRPAI_H="$BSPDIR/src/linux/include/uapi/linux/drpai.h"
 if [ -f "$DRPAI_H" ]; then
