@@ -33,7 +33,7 @@ rm -f "$BOOT_IMG"
 mkfs.fat -F16 -n boot -C "$BOOT_IMG" $((BOOT_SIZE_MIB * 1024)) >/dev/null
 mmd -i "$BOOT_IMG" ::boot
 mcopy -i "$BOOT_IMG" "$KERNEL_IMAGE" ::boot/Image
-mcopy -i "$BOOT_IMG" "$DTB" "::boot/$(basename "$DTB")"
+mcopy -i "$BOOT_IMG" "$DTB" "${DTB%.dtb}"-*.dtbo ::boot/
 mcopy -i "$BOOT_IMG" "$BSPDIR/dl/Codec_Bin.bin" ::boot/Codec_Bin.bin
 mcopy -i "$BOOT_IMG" "$BSPDIR/dl/OpenCV_Bin.bin" ::boot/OpenCV_Bin.bin
 
