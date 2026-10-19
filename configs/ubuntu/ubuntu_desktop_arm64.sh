@@ -27,7 +27,7 @@ BASE_PACKAGES=(
   tcpdump mtd-utils pciutils usbutils lsb-release iptables
   dmidecode flex fbset
   mmc-utils i2c-tools lm-sensors net-tools locales
-  can-utils v4l-utils alsa-utils gpiod libgpiod-dev
+  can-utils v4l-utils alsa-utils gpiod libgpiod-dev systemd-zram-generator
 )
 DESKTOP_PACKAGES=(
   ubuntu-desktop-minimal gdm3 network-manager
