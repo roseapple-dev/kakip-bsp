@@ -1,0 +1,72 @@
+#!/bin/bash
+# Install ROS 2 Lyrical (+ Nav2 / slam_toolbox / MoveIt / foxglove_bridge) on
+# Kakip Ubuntu 26.04 from the official ROS apt binaries.  Idempotent.
+# Shipped in the image but nothing is preinstalled: run it on the board when
+# ROS 2 is wanted (about 5.4 GB of packages, 4.4 GB with --minimal).
+#
+#   sudo kakip-install-ros2            full set (what ros2-eval/README.md was measured with)
+#   sudo kakip-install-ros2 --minimal  no Gazebo vendor libs, dev tools, demos  (~1 GB less)
+#   sudo kakip-install-ros2 --check    run a talker/listener smoke test after install
+set -euo pipefail
+
+MINIMAL=0; CHECK=0
+for a in "$@"; do case $a in --minimal) MINIMAL=1;; --check) CHECK=1;; *) echo "usage: $0 [--minimal] [--check]"; exit 1;; esac; done
+[ "$(id -u)" = 0 ] || { echo "run as root (sudo)"; exit 1; }
+export DEBIAN_FRONTEND=noninteractive
+
+DISTRO=lyrical
+CODENAME=$(. /etc/os-release; echo "$VERSION_CODENAME")   # resolute on 26.04
+
+# --- apt source: ros2-apt-source .deb from ros-infrastructure (key + sources.list) ---
+if ! dpkg -s ros2-apt-source >/dev/null 2>&1; then
+  apt-get install -y -qq curl ca-certificates
+  VER=$(curl -sL https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F tag_name | awk -F'"' '{print $4}')
+  [ -n "$VER" ] || { echo "cannot resolve ros-apt-source version (GitHub API)"; exit 1; }
+  curl -sL -o /tmp/ros2-apt-source.deb \
+    "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${VER}/ros2-apt-source_${VER}.${CODENAME}_all.deb"
+  dpkg -i /tmp/ros2-apt-source.deb
+fi
+apt-get update -qq
+
+# --- packages ---
+P=ros-$DISTRO
+PKGS=(
+  $P-ros-base            # rclcpp/rclpy, tf2, DDS (Fast DDS), ros2 CLI
+  $P-navigation2         # Nav2 1.5 servers + plugins
+  $P-nav2-simple-commander
+  $P-slam-toolbox        # 2D lidar SLAM
+  $P-foxglove-bridge     # ws://<board>:8765 for Foxglove on a PC
+  $P-moveit $P-moveit-py # arm motion planning
+  $P-moveit-resources    # Panda demo robot (mock hardware) used by moveit_test.sh
+  $P-ros2-control $P-ros2-controllers
+  $P-ros2bag $P-rosbag2-storage-mcap
+)
+if [ $MINIMAL = 0 ]; then
+  PKGS+=(
+    $P-nav2-bringup      # bringup_launch.py (lifecycle manager); pulls ros-gz / Gazebo vendor libs (~200 MB)
+    $P-demo-nodes-cpp $P-demo-nodes-py
+    ros-dev-tools python3-colcon-common-extensions   # only needed to build packages on the board
+  )
+fi
+apt-get install -y "${PKGS[@]}"
+
+# --- shell environment for every login shell (bash/zsh/sh) ---
+cat > /etc/profile.d/ros2.sh <<EOF
+# ROS 2 $DISTRO
+[ -f /opt/ros/$DISTRO/setup.sh ] && . /opt/ros/$DISTRO/setup.sh
+EOF
+
+echo "installed: $(dpkg-query -W -f='${Package}\n' "$P-*" 2>/dev/null | wc -l) ros-$DISTRO packages, /opt/ros/$DISTRO = $(du -sh /opt/ros/$DISTRO | cut -f1)"
+
+# --- smoke test ---
+if [ $CHECK = 1 ]; then
+  set +u; . /opt/ros/$DISTRO/setup.sh   # ROS setup.sh is not -u clean
+  if dpkg -s $P-demo-nodes-cpp >/dev/null 2>&1; then
+    timeout 10 ros2 run demo_nodes_cpp talker >/dev/null 2>&1 &
+    timeout 10 ros2 run demo_nodes_py listener > /tmp/ros2_check.log 2>&1 || true   # timeout exit is expected
+    wait || true
+    if grep -q "I heard" /tmp/ros2_check.log; then echo "CHECK: talker/listener OK"; else echo "CHECK: FAILED"; cat /tmp/ros2_check.log; exit 1; fi
+  else
+    ros2 pkg list | grep -q nav2_bt_navigator && echo "CHECK: ros2 pkg list OK (demo nodes not installed in --minimal)"
+  fi
+fi
