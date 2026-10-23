@@ -30,8 +30,8 @@ BASE_PACKAGES=(
   can-utils v4l-utils alsa-utils gpiod libgpiod-dev systemd-zram-generator
 )
 DESKTOP_PACKAGES=(
-  ubuntu-desktop-minimal gdm3 network-manager
-  fonts-dejavu-core fonts-noto-cjk fonts-noto-color-emoji fontconfig
+  ubuntu-desktop-minimal gdm3 network-manager gnome-terminal
+  fonts-dejavu-core fonts-noto-cjk fonts-noto-color-emoji fonts-ubuntu fontconfig
   gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
   gstreamer1.0-libav libgstreamer1.0-0 libgstreamer-plugins-base1.0-0
   gnome-remote-desktop gnome-keyring rtkit dconf-cli openssl
