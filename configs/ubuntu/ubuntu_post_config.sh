@@ -100,6 +100,7 @@ install -D -m 644 "$BSPDIR/system/udev/70-kakip-gbeth-tuning.rules" "$ROOTDIR/et
 install -D -m 644 "$BSPDIR/system/vkms.service"              "$ROOTDIR/lib/systemd/system/vkms.service"
 install -D -m 644 "$BSPDIR/system/systemd/zram-generator.conf" "$ROOTDIR/etc/systemd/zram-generator.conf"
 install -D -m 755 "$BSPDIR/tools/resizerfs" "$ROOTDIR/usr/bin/resizerfs"
+install -D -m 755 "$BSPDIR/tools/kakip-install-ros2" "$ROOTDIR/usr/bin/kakip-install-ros2"
 install -D -m 644 "$BSPDIR/system/resizerfs.service" "$ROOTDIR/lib/systemd/system/resizerfs.service"
 
 cat > "$ROOTDIR/etc/environment" <<'EOT'
