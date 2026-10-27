@@ -18,3 +18,16 @@ d41666d6b39c1702ef5b87f3d828942dda4949e476dcadc2b306befea9c317e2  ./bootloader/k
 1df6425f11f96a43531b145fa2315c4de5fda628cb1f54b474a3e65a798c28cb  ./OMXR_VideoExt.h
 5c910b1e5d0c25a3a71435fbe1613eaf73037866abd1af386bf5eef1341b44af  ./OMXR_IndexExt.h
 ce83125fd59c5cced214fbfb71a141e42862cc45136766ff308fda3f12dea742  ./drp_api.h
+8b06f22ff6386a04989226b30f7dd09e71747955b7f6c3318744bed587ecf14f  ./drp-ai-tvm/libmera2_runtime.so
+3597cd6081c3b54a47231078bfb87a11bb459a7172a2b59cab1f786e3b57d288  ./drp-ai-tvm/libmera2_plan_io.so
+613dcea38d68d03a53f48afbc4a86962695590d1c84f8093fa19bc6de3c14211  ./drp-ai-tvm/libdrp_tvm_rt.so
+8d387a058d4a2236f2a78e69b0cb02ba8fd5ff72aafef8f0c165f8a16c673c04  ./drp-ai-tvm/libdrp_rt.so
+ea33671b2f6e9fbef06df68c648e3d34478ee3624d0be4ad2a930fd99e61ba6b  ./drp-ai-tvm/libacl_rt.so
+ea09c18a4191694d2022307db8ded5c64dc54e462851c6b2f4964738bf7a2c33  ./drp-ai-tvm/libarm_compute.so
+27440ebaca16f68e6e1cb75a65903bac6aca55148d95404b4865f93ab01a67cd  ./drp-ai-tvm/libarm_compute_core.so
+cd7234723ed9842a958a5e674d1c1a42fd4e2caec75ccae1a64abc64c97e2bd3  ./drp-ai-tvm/libarm_compute_graph.so
+9d4cec496338b05a82a250e6857827ae9c2b494046517fe81139869ee1eeac78  ./drp-ai-tvm/log_out.bin
+a89c08e0b47270c1b76d6639ecccda04736529695126335db3c8c5ef92148f71  ./drp-ai-tvm/rmsnorm_out.bin
+95021297f026534ee675b5d9de0f8602e768903deefaca81f0fa927f7fdd6a9a  ./drp-ai-tvm/softmax_out.bin
+da8f2a000261ccc282e5f203a614bb0363223df3b528b960a9f277f09fc68c64  ./drp-ai-tvm/split_out.bin
+49bbe9114e49214df2ccc324cb3ac8d1d1aa1c3a0947f94c286765e86647b32e  ./drp-ai-tvm/LICENSE
