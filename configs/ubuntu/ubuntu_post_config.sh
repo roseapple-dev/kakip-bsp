@@ -71,11 +71,18 @@ for so in "$LIBDIR"/libomxr_*.so.*.*.* "$LIBDIR"/libuvcs_*.so.*.*.*; do
 done
 
 # --- DRP-AI userspace ---
-# DRP-AI TVM runtime from AI SDK v6.00 lib_tvm.tar.gz = rzv_drp-ai_tvm v2.5.1
-tar -xf "$DLDIR/lib_tvm.tar.gz" -C "$WORK"
-install -D -m 755 "$WORK/lib_binaries/libtvm_runtime.so.2.5.1" "$LIBDIR/libtvm_runtime.so.2.5.1"
-ln -sf libtvm_runtime.so.2.5.1 "$LIBDIR/libtvm_runtime.so"
-install -D -m 644 "$WORK/lib_binaries/licenses/LICENSE" "$ROOTDIR/usr/share/doc/libtvm-runtime/LICENSE"
+# DRP-AI TVM runtime v2.8.0-hotfix2 (MERA2), prebuilt from rzv_drp-ai_tvm
+# (configs/components/drpai-tvm.mk). Own directory on the loader path: its
+# libarm_compute*.so have no SONAME and would clash with Ubuntu's
+# libarm-compute-dev. libdrp_rt.so looks for the *_out.bin DRP kernels under
+# $LD_LIBRARY_PATH, so apps whose models use them set
+# LD_LIBRARY_PATH=/usr/lib/drp-ai-tvm (Renesas apps do the same with ./lib).
+TVMDIR="$ROOTDIR/usr/lib/drp-ai-tvm"
+install -d "$TVMDIR"
+install -m 755 "$DLDIR"/drp-ai-tvm/*.so "$TVMDIR/"
+install -m 644 "$DLDIR"/drp-ai-tvm/*.bin "$TVMDIR/"
+echo /usr/lib/drp-ai-tvm > "$ROOTDIR/etc/ld.so.conf.d/drp-ai-tvm.conf"
+install -D -m 644 "$DLDIR/drp-ai-tvm/LICENSE" "$ROOTDIR/usr/share/doc/drp-ai-tvm/LICENSE"
 # libdrp_api.so: dlopen'ed by libomxr_mc_h265d (only a load-failed warning without it)
 install -D -m 755 "$DLDIR/libdrp_api.so" "$LIBDIR/libdrp_api.so"
 ln -sf aarch64-linux-gnu/libdrp_api.so "$ROOTDIR/usr/lib/libdrp_api.so"

@@ -10,7 +10,6 @@ blob_mali-g31_um_v1.3.0.tar.gz_aisdk := $(AISDK_REC)/meta-rz-graphics/recipes-gr
 blob_mali-g31_km_v1.3.0.tar.gz_aisdk := $(AISDK_REC)/meta-rz-graphics/recipes-kernel/kernel-module-mali/files/mali-g31_km_v1.3.0.tar.gz
 blob_codec_pkg_product_v4.3.3.0.tar.gz_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-multimedia/codec-module/files/codec_pkg_product_v4.3.3.0.tar.gz
 blob_uvcs_kernel_package_v4.3.3.0.tar.bz2_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-kernel/kernel-module-uvcs-drv/files/uvcs_kernel_package_v4.3.3.0.tar.bz2
-blob_lib_tvm.tar.gz_aisdk := $(AISDK_REC)/meta-rz-drpai/recipes-core/lib-tvm/lib-tvm/lib_tvm.tar.gz
 blob_libdrp_api.so_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-drp/drp-lib/files/libdrp_api.so
 blob_Codec_Bin.bin_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-drp/drp-fw/files/Codec_Bin.bin
 blob_OpenCV_Bin.bin_aisdk := $(AISDK_REC)/meta-rz-opencva/recipes-oca/oca/files/OpenCV_Bin.bin
@@ -21,7 +20,7 @@ blob_drp_api.h_aisdk := $(AISDK_REC)/meta-rz-codecs/recipes-drp/drp-lib/files/dr
 BLOBS := mali-g31_um_v1.3.0.tar.gz mali-g31_km_v1.3.0.tar.gz \
          codec_pkg_product_v4.3.3.0.tar.gz uvcs_kernel_package_v4.3.3.0.tar.bz2 \
          OMXR_VideoExt.h OMXR_IndexExt.h drp_api.h \
-         lib_tvm.tar.gz libdrp_api.so Codec_Bin.bin OpenCV_Bin.bin
+         libdrp_api.so Codec_Bin.bin OpenCV_Bin.bin
 
 define BLOB_template
 fetch-blob-$(1):

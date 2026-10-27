@@ -16,13 +16,13 @@ network (all git tarballs are in `oss_pkg_rzv_v6.00/downloads`).
 | VPU codec | v4.3.3.0 (`libomxr_*`/`libuvcs_*` blobs; uvcs KM source, `ip_option=0x3000A`) | `meta-rz-codecs/…` |
 | gst-omx | branch `RZ/1.22.12`, SRCREV `189acf4d…` | `gstreamer1.0-omx_1.22.12.bbappend` |
 | vspmfilter | branch `rz_g2l`, SRCREV `e4e24c82…`, +VTOP ioctl patch | `gstreamer1.0-plugin-vspmfilter.bb` |
-| TVM runtime | `libtvm_runtime.so.2.5.1` (blob) | `meta-rz-drpai/recipes-core/lib-tvm` |
+| DRP-AI TVM runtime | v2.8.0-hotfix2 prebuilt libs (`libmera2_runtime.so` etc.) in `/usr/lib/drp-ai-tvm` | not from the AI SDK: `renesas-rz/rzv_drp-ai_tvm` `63c44ef7`, `obj/build_runtime/v2h/lib` |
 | DRP fw / OpenCVA | `Codec_Bin.bin`, `OpenCV_Bin.bin`, `libdrp_api.so` (blobs) | `recipes-drp`, `recipes-oca` |
 | u-boot | 2024.07, SRCREV `8e0b7870…`, `rzv2h-evk-ver1_defconfig` | `recipes-bsp/u-boot_2024.07.bb` |
 | TF-A | 2.10, SRCREV `3c83dd6f…`, PLAT=v2h BOARD=evk_1 | `recipes-bsp/trusted-firmware-a_2.10.bb` |
 
 Closed blobs (no source anywhere, reused as-is): Mali UM, codec `libomxr_*`/
-`libuvcs_*`, `libdrp_api.so`, `libtvm_runtime.so`, `Codec_Bin.bin`,
+`libuvcs_*`, `libdrp_api.so`, DRP-AI TVM runtime libs, `Codec_Bin.bin`,
 `OpenCV_Bin.bin`. License: `codec_pkg_product_v4.3.3.0/License.txt` +
 `references/linux_licenses.zip` — check redistribution terms before shipping.
 
