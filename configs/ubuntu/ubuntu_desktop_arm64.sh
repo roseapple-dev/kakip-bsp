@@ -35,6 +35,8 @@ DESKTOP_PACKAGES=(
   gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
   gstreamer1.0-libav libgstreamer1.0-0 libgstreamer-plugins-base1.0-0
   gnome-remote-desktop gnome-keyring rtkit dconf-cli openssl
+  libopencv-core410 libopencv-imgproc410 libopencv-imgcodecs410
+  libopencv-videoio410 libopencv-highgui410
 )
 PACKAGES=("${BASE_PACKAGES[@]}" "${DESKTOP_PACKAGES[@]}")
 
