@@ -29,6 +29,8 @@ PYEOF
 fi
 IN_TAR="$NODEV_TAR"
 
+export QEMU_CPU=${QEMU_CPU:-cortex-a55}
+
 mmdebstrap \
   --arch=arm64 \
   --mode=auto \

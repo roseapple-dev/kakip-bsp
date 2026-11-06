@@ -30,6 +30,8 @@ with tarfile.open(src, 'r|') as ti, tarfile.open(dst, 'w', format=tarfile.PAX_FO
 PYEOF
 fi
 
+export QEMU_CPU=${QEMU_CPU:-cortex-a55}
+
 mmdebstrap \
   --arch=arm64 \
   --mode=auto \

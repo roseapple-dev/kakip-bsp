@@ -47,6 +47,8 @@ if [ "$SKIP_GST" != "--skip-gst" ]; then
   HOOKS+=(--customize-hook="bash '$BSPDIR/tools/build_gst_plugins.sh' \"\$1\" || { echo '[WARN] gst hook failed'; touch \"\$1/etc/bsp-gst-failed\"; }")
 fi
 
+export QEMU_CPU=${QEMU_CPU:-cortex-a55}
+
 mmdebstrap \
   --arch=$ARCH \
   --mode=auto \
