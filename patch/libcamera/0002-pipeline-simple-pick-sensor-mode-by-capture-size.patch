@@ -1,0 +1,42 @@
+From 84337a3b4f4d261cbc461db9c9c6411bc2e9da3f Mon Sep 17 00:00:00 2001
+From: Jason Yang <jason98166@gmail.com>
+Date: Tue, 30 Jun 2026 12:00:00 +0000
+Subject: [PATCH] pipeline: simple: pick sensor mode by capture size
+
+SimpleCameraConfiguration::validate() picks a sensor mode by
+comparing outputSizes.max (post-debayer, two-pixel border per
+side smaller) against the requested stream size, so a 1920x1080
+request escalates past a 1920x1080 sensor mode to the next
+larger one.
+
+Compare against captureSize instead.  The existing adjustSize()
+path still flags the debayer-border crop as Adjusted.
+
+Signed-off-by: Jason Yang <jason98166@gmail.com>
+---
+ src/libcamera/pipeline/simple/simple.cpp | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/src/libcamera/pipeline/simple/simple.cpp b/src/libcamera/pipeline/simple/simple.cpp
+index 825f246..a7b5291 100644
+--- a/src/libcamera/pipeline/simple/simple.cpp
++++ b/src/libcamera/pipeline/simple/simple.cpp
+@@ -1244,7 +1244,6 @@ CameraConfiguration::Status SimpleCameraConfiguration::validate()
+ 
+ 	for (const SimpleCameraData::Configuration *pipeConfig : *configs) {
+ 		const Size &captureSize = pipeConfig->captureSize;
+-		const Size &maxOutputSize = pipeConfig->outputSizes.max;
+ 		bool curCfgPacked = false;
+ 		bool newCfgPacked = false;
+ 
+@@ -1258,8 +1257,8 @@ CameraConfiguration::Status SimpleCameraConfiguration::validate()
+ 			}
+ 		}
+ 
+-		if (maxOutputSize.width >= maxProcessedStreamSize.width &&
+-		    maxOutputSize.height >= maxProcessedStreamSize.height &&
++		if (captureSize.width >= maxProcessedStreamSize.width &&
++		    captureSize.height >= maxProcessedStreamSize.height &&
+ 		    captureSize.width >= maxRawStreamSize.width &&
+ 		    captureSize.height >= maxRawStreamSize.height) {
+ 			if (!pipeConfig_ || captureSize < pipeConfig_->captureSize ||

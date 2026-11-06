@@ -1,1 +1,2 @@
 0001-libcamera-simple-Add-support-for-the-Renesas-RZ-G2L-CRU.patch
+0002-pipeline-simple-pick-sensor-mode-by-capture-size.patch
