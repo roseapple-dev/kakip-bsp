@@ -46,6 +46,7 @@ if [ "$SKIP_GST" != "--skip-gst" ]; then
   # the whole (long) bootstrap — check for /etc/bsp-gst-failed afterwards
   HOOKS+=(--customize-hook="bash '$BSPDIR/tools/build_gst_plugins.sh' \"\$1\" || { echo '[WARN] gst hook failed'; touch \"\$1/etc/bsp-gst-failed\"; }")
 fi
+HOOKS+=(--customize-hook="bash '$BSPDIR/tools/build_libcamera.sh' \"\$1\" || { echo '[WARN] libcamera hook failed'; touch \"\$1/etc/bsp-libcamera-failed\"; }")
 
 export QEMU_CPU=${QEMU_CPU:-cortex-a55}
 
