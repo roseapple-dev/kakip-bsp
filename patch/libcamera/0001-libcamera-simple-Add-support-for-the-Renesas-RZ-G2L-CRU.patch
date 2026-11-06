@@ -1,0 +1,23 @@
+From bd66f6d3cb6af7e2aae77909279765a4404cea90 Mon Sep 17 00:00:00 2001
+From: Jason Yang <jason98166@gmail.com>
+Date: Mon, 2 Nov 2026 17:32:17 +0800
+Subject: [PATCH] libcamera: simple: Add support for the Renesas RZ/G2L CRU
+
+Add the rzg2l_cru media driver to the supported devices of the simple
+pipeline handler, which also enables SoftISP on it.
+---
+ src/libcamera/pipeline/simple/simple.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/libcamera/pipeline/simple/simple.cpp b/src/libcamera/pipeline/simple/simple.cpp
+index 35e0664..825f246 100644
+--- a/src/libcamera/pipeline/simple/simple.cpp
++++ b/src/libcamera/pipeline/simple/simple.cpp
+@@ -265,6 +265,7 @@ static const SimplePipelineInfo supportedDevices[] = {
+ 	{ "mtk-seninf", { { "mtk-mdp", 3 } }, false },
+ 	{ "mxc-isi", {}, false },
+ 	{ "qcom-camss", {}, true },
++	{ "rzg2l_cru", {}, true },
+ 	{ "sun6i-csi", {}, false },
+ };
+ 
