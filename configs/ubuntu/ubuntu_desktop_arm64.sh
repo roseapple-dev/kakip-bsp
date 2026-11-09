@@ -25,7 +25,7 @@ BASE_PACKAGES=(
   wget curl ca-certificates systemd systemd-sysv psmisc ethtool iproute2 openssh-server
   openssh-client patchelf htop util-linux lshw keyutils wpasupplicant
   tcpdump mtd-utils pciutils usbutils lsb-release iptables
-  dmidecode flex fbset
+  dmidecode flex fbset libubootenv-tool
   mmc-utils i2c-tools lm-sensors net-tools locales
   can-utils v4l-utils alsa-utils gpiod libgpiod-dev systemd-zram-generator
 )

@@ -106,6 +106,7 @@ install -D -m 644 "$BSPDIR/system/udev/99-rzv2h-accel.rules"  "$ROOTDIR/etc/udev
 install -D -m 644 "$BSPDIR/system/udev/70-kakip-gbeth-tuning.rules" "$ROOTDIR/etc/udev/rules.d/70-kakip-gbeth-tuning.rules"
 install -D -m 644 "$BSPDIR/system/vkms.service"              "$ROOTDIR/lib/systemd/system/vkms.service"
 install -D -m 644 "$BSPDIR/system/systemd/zram-generator.conf" "$ROOTDIR/etc/systemd/zram-generator.conf"
+install -D -m 644 "$BSPDIR/system/fw_env.config" "$ROOTDIR/etc/fw_env.config"
 install -D -m 755 "$BSPDIR/tools/resizerfs" "$ROOTDIR/usr/bin/resizerfs"
 install -D -m 755 "$BSPDIR/tools/kakip-install-ros2" "$ROOTDIR/usr/bin/kakip-install-ros2"
 install -D -m 644 "$BSPDIR/system/resizerfs.service" "$ROOTDIR/lib/systemd/system/resizerfs.service"

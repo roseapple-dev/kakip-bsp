@@ -75,6 +75,7 @@ rm -f "$BOOT_IMG" "$ROOT_IMG"
 #              BootROM drops to "SCI Download mode (parameter error)")
 #   sector 8   BL2 (TF-A 2.10 w/ Kakip LPDDR4 config, BOARD=kakip_1)
 #   sector 768 FIP (BL31 + U-Boot)
+#   0x3FC000   U-Boot env, 16 KiB (ends exactly at p1; see system/fw_env.config)
 # All live before p1@8192.
 KAKIP_BP="$BSPDIR/dl/bootloader/kakip/bp-kakip.bin"
 KAKIP_BL2="$BSPDIR/dl/bootloader/kakip/bl2-kakip.bin"
