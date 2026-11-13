@@ -8,6 +8,8 @@ set -euo pipefail
 #   uvcs_drv.ko    — kernel-module-uvcs-drv.bb: B=src/makefile (a directory!),
 #                    exports UVCS_SRC/UVCS_INC/VCP4_SRC, make KERNELDIR=…
 #   mmngr/mmngrbuf/vspm/vspm_if — renesas-rcar drv repos (fetched to src/)
+#   88x2bu.ko      — RTL88x2BU USB WiFi vendor driver (fetched to src/), built
+#                    through its own Makefile: make KSRC=…
 # Staged into build/modules-stage/lib/modules/<ver>/extra/.
 
 BSPDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
@@ -95,6 +97,11 @@ echo "[BUILD] vspm_if"
 ( cd "$BSPDIR/src/vspmif_drv/vspm_if-module/files/vspm_if/drv"
   make all
   cp vspm_if.ko "$EXTRA/" )
+
+echo "[BUILD] 88x2bu"
+make -C "$BSPDIR/src/rtl88x2bu" -j"$J" \
+  KSRC="$KDIR" ARCH=arm64 CROSS_COMPILE="$CROSS_COMPILE"
+cp "$BSPDIR/src/rtl88x2bu/88x2bu.ko" "$EXTRA/"
 
 depmod -b "$STAGE" "$KVER" 2>/dev/null || true
 echo "[INFO] staged modules:"
