@@ -32,6 +32,7 @@ bootloader:
 
 # fully rootless: mmdebstrap unshare + hooks (post-config & gst build inside)
 rootfs:
+	@bash tools/release_notes.sh $(RELNOTES)
 	@bash configs/ubuntu/ubuntu_desktop_arm64.sh $(ROOTFS_TAR)
 
 image:

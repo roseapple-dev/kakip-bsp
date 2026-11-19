@@ -93,6 +93,7 @@ if [ -f "$DRPAI_H" ]; then
 else
   echo "[INFO] kernel tree has no DRP-AI driver, skipping drpai.h"
 fi
+install -D -m 644 "$BSPDIR/build/release_notes.txt" "$ROOTDIR/etc/kakip-release"
 install -D -m 644 "$BSPDIR/system/modules-load.d/kakip-accel.conf" "$ROOTDIR/etc/modules-load.d/kakip-accel.conf"
 install -D -m 644 "$BSPDIR/system/modprobe.d/88x2bu.conf" "$ROOTDIR/etc/modprobe.d/88x2bu.conf"
 
