@@ -94,6 +94,15 @@ else
   echo "[INFO] kernel tree has no DRP-AI driver, skipping drpai.h"
 fi
 install -D -m 644 "$BSPDIR/build/release_notes.txt" "$ROOTDIR/etc/kakip-release"
+echo kakip > "$ROOTDIR/etc/hostname"
+cat > "$ROOTDIR/etc/hosts" <<'EOF'
+127.0.0.1	localhost
+127.0.1.1	kakip
+
+::1	localhost ip6-localhost ip6-loopback
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+EOF
 install -D -m 644 "$BSPDIR/system/modules-load.d/kakip-accel.conf" "$ROOTDIR/etc/modules-load.d/kakip-accel.conf"
 install -D -m 644 "$BSPDIR/system/modprobe.d/88x2bu.conf" "$ROOTDIR/etc/modprobe.d/88x2bu.conf"
 
