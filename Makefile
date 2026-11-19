@@ -10,12 +10,14 @@ include $(wildcard $(BSPDIR)/configs/components/*.mk)
 BUILD  := $(BSPDIR)/build
 ROOTFS_TAR := $(BUILD)/rootfs.tar
 IMG    := $(BUILD)/kakip-ubuntu-26.04-gnome-arm64.img
+RELNOTES := $(BUILD)/release_notes.txt
 
 .PHONY: all fetch $(FETCH_TARGETS) kernel modules bootloader rootfs image clean distclean
 
 all: image
 
 fetch: $(FETCH_TARGETS)
+	@bash tools/release_notes.sh $(RELNOTES)
 
 kernel:
 	@bash tools/build_kernel.sh
