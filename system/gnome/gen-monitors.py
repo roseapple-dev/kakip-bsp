@@ -16,6 +16,7 @@ import os
 import re
 import struct
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 DRM_DIR = Path("/sys/class/drm")
@@ -194,6 +195,21 @@ def build_xml(displays):
     return "\n".join(lines)
 
 
+def has_config_for(path, displays):
+    """True if monitors.xml has a configuration for exactly these monitors."""
+    want = {d[:4] for d in displays}
+    try:
+        root = ET.parse(path).getroot()
+    except (OSError, ET.ParseError):
+        return False
+    keys = ("connector", "vendor", "product", "serial")
+    for cfg in root.iter("configuration"):
+        have = {tuple(s.findtext(k, "") for k in keys) for s in cfg.iter("monitorspec")}
+        if have == want:
+            return True
+    return False
+
+
 def write_atomic(path, content, mode=0o644, uid_gid=None):
     """Write file then set perms/owner. Skips owner change if uid_gid is None."""
     made = []
@@ -269,18 +285,19 @@ def main():
     if not SKEL_PATH.exists():
         write_atomic(SKEL_PATH, xml, mode=0o644)
 
-    # 3) Existing user homes: seed monitors.xml only if user hasn't
-    #    configured displays themselves (file absent).
+    # 3) Existing user homes: write monitors.xml unless it already covers
+    #    the attached monitors (mutter ignores a file that does not).
     if HOMES_DIR.is_dir():
         for home in sorted(HOMES_DIR.iterdir()):
             if not home.is_dir():
                 continue
             user_xml = home / ".config" / "monitors.xml"
-            if user_xml.exists():
+            if has_config_for(user_xml, displays):
                 continue
             try:
                 st = home.stat()
                 write_atomic(user_xml, xml, mode=0o644, uid_gid=(st.st_uid, st.st_gid))
+                Path("/run/gen-monitors.need-restart").touch()
             except OSError as e:
                 print(f"gen-monitors: skipping {user_xml}: {e}", file=sys.stderr)
 
