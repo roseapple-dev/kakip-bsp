@@ -127,6 +127,7 @@ COGL_DRIVER=gles2
 CLUTTER_DRIVER=gles2
 GDK_GL=gles
 QT_QPA_PLATFORM=wayland
+MUTTER_DEBUG_DISABLE_HW_CURSORS=1
 EOT
 
 # Mali blob is Wayland-only: force GDM to Wayland session, no X fallback
